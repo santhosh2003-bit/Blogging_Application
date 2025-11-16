@@ -69,35 +69,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const refreshToken = async () => {
-    try {
-      const storedToken = localStorage.getItem("token");
-      if (!storedToken) return;
+  // const refreshToken = async () => {
+  //   try {
+  //     const storedToken = localStorage.getItem("token");
+  //     if (!storedToken) return;
 
-      const response = await fetch(`${BACKEND_URL}/api/auth/refresh`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
+  //     const response = await fetch(`${BACKEND_URL}/api/auth/refresh`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${storedToken}`,
+  //       },
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok) {
-        setToken(data.token);
-        setUser(data.data.user);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.data.user));
-      } else {
-        // Token is invalid, logout
-        logout();
-      }
-    } catch (error) {
-      console.error("Token refresh failed:", error);
-      logout();
-    }
-  };
+  //     if (response.ok) {
+  //       setToken(data.token);
+  //       setUser(data.data.user);
+  //       localStorage.setItem("token", data.token);
+  //       localStorage.setItem("user", JSON.stringify(data.data.user));
+  //     } else {
+  //       // Token is invalid, logout
+  //       logout();
+  //     }
+  //   } catch (error) {
+  //     console.error("Token refresh failed:", error);
+  //     logout();
+  //   }
+  // };
 
   const register = async (name: string, email: string, password: string) => {
     try {

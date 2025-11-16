@@ -72,7 +72,10 @@ export default function AuthorPage() {
     );
 
   const totalViews = blogs.reduce((s, b) => s + (b.viewCount || 0), 0);
-  const totalComments = blogs.reduce((s, b) => s + (b.comments?.length || 0), 0);
+  const totalComments = blogs.reduce(
+    (s, b) => s + (b.comments?.length || 0),
+    0
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -93,15 +96,20 @@ export default function AuthorPage() {
                 .join("")}
             </div>
             <div className="flex-1">
-              <h1 className="text-2xl font-bold">{decodedAuthor || "Unknown"}</h1>
+              <h1 className="text-2xl font-bold">
+                {decodedAuthor || "Unknown"}
+              </h1>
               <p className="text-sm text-gray-600 mt-1">
-                {blogs.length} posts · {totalViews} views · {totalComments} comments
+                {blogs.length} posts · {totalViews} views · {totalComments}{" "}
+                comments
               </p>
             </div>
             <div>
               <button
                 onClick={toggleFollow}
-                className={`px-4 py-2 rounded-md text-white ${following ? "bg-gray-600" : "bg-blue-600 hover:bg-blue-700"}`}
+                className={`px-4 py-2 rounded-md text-white ${
+                  following ? "bg-gray-600" : "bg-blue-600 hover:bg-blue-700"
+                }`}
               >
                 {following ? "Following" : "Follow"}
               </button>
@@ -111,25 +119,48 @@ export default function AuthorPage() {
 
         <section className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Posts by {decodedAuthor}</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              Posts by {decodedAuthor}
+            </h2>
             {blogs.length === 0 ? (
-              <p className="text-gray-600">No posts published by this author yet.</p>
+              <p className="text-gray-600">
+                No posts published by this author yet.
+              </p>
             ) : (
               <ul className="space-y-4">
                 {blogs.map((b) => (
                   <li key={b.id} className="border-b pb-3">
-                    <Link to={`/view/${b.id}`} className="text-lg font-medium text-blue-600 hover:underline">
+                    <Link
+                      to={`/view/${b.id}`}
+                      className="text-lg font-medium text-blue-600 hover:underline"
+                    >
                       {b.title}
                     </Link>
                     <div className="text-sm text-gray-500 mt-1 flex gap-4">
-                      <span className="flex items-center gap-1"><Calendar className="w-4 h-4" />{b.publishedAt ? new Date(b.publishedAt).toLocaleDateString() : 'Draft'}</span>
-                      <span className="flex items-center gap-1"><Eye className="w-4 h-4" />{b.viewCount || 0} views</span>
-                      <span className="flex items-center gap-1"><MessageSquare className="w-4 h-4" />{b.comments.length}</span>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {b.publishedAt
+                          ? new Date(b.publishedAt).toLocaleDateString()
+                          : "Draft"}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" />
+                        {b.viewCount || 0} views
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <MessageSquare className="w-4 h-4" />
+                        {b.comments.length}
+                      </span>
                     </div>
                     {b.tags && b.tags.length > 0 && (
                       <div className="mt-2 flex gap-2">
                         {b.tags.map((t, i) => (
-                          <span key={i} className="text-xs bg-gray-100 px-2 py-1 rounded">{t}</span>
+                          <span
+                            key={i}
+                            className="text-xs bg-gray-100 px-2 py-1 rounded"
+                          >
+                            {t}
+                          </span>
                         ))}
                       </div>
                     )}
@@ -151,10 +182,15 @@ export default function AuthorPage() {
                   .slice(0, 5)
                   .map((b) => (
                     <li key={b.id}>
-                      <Link to={`/view/${b.id}`} className="text-sm text-blue-600 hover:underline">
+                      <Link
+                        to={`/view/${b.id}`}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
                         {b.title}
                       </Link>
-                      <div className="text-xs text-gray-500">{b.viewCount || 0} views</div>
+                      <div className="text-xs text-gray-500">
+                        {b.viewCount || 0} views
+                      </div>
                     </li>
                   ))}
               </ol>
@@ -162,7 +198,11 @@ export default function AuthorPage() {
 
             <div className="mt-6 border-t pt-4">
               <h4 className="font-medium mb-2">About</h4>
-              <p className="text-sm text-gray-600">This author profile is generated from post metadata. For richer profiles, consider adding a dedicated "authors" table in the database with bio, avatar, and contact info.</p>
+              <p className="text-sm text-gray-600">
+                This author profile is generated from post metadata. For richer
+                profiles, consider adding a dedicated "authors" table in the
+                database with bio, avatar, and contact info.
+              </p>
             </div>
           </aside>
         </section>

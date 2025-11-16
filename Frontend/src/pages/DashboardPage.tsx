@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { supabase } from "../lib/supabase";
 import { type BlogPost } from "../types";
 import { BarChart3, Eye, MessageSquare, Calendar } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";

@@ -60,7 +60,9 @@ export default function BlogListPage() {
       <header className="bg-white shadow-sm p-4">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-2xl font-bold">All Blogs</h1>
-          <p className="text-sm text-gray-600">Browse published posts. Most viewed posts are shown first.</p>
+          <p className="text-sm text-gray-600">
+            Browse published posts. Most viewed posts are shown first.
+          </p>
         </div>
       </header>
 
@@ -71,36 +73,61 @@ export default function BlogListPage() {
           <div className="space-y-4">
             {blogs.map((b) => (
               <article key={b.id} className="bg-white p-4 rounded shadow">
-                <Link to={`/view/${b.id}`} className="text-lg font-semibold text-blue-600 hover:underline">
+                <Link
+                  to={`/view/${b.id}`}
+                  className="text-lg font-semibold text-blue-600 hover:underline"
+                >
                   {b.title}
                 </Link>
                 <div className="flex items-center gap-4 text-sm text-gray-500 mt-2">
-                  <div className="flex items-center gap-1"><User className="w-4 h-4" />{b.author}</div>
-                  <div className="flex items-center gap-1"><Calendar className="w-4 h-4" />{b.publishedAt ? new Date(b.publishedAt).toLocaleDateString() : 'Draft'}</div>
-                  <div className="flex items-center gap-1"><Eye className="w-4 h-4" />{b.viewCount || 0} views</div>
+                  {/* <div className="flex items-center gap-1">
+                    <User className="w-4 h-4" />
+                    {b.author}
+                  </div> */}
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" />
+                    {b.publishedAt
+                      ? new Date(b.publishedAt).toLocaleDateString()
+                      : "Draft"}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Eye className="w-4 h-4" />
+                    {b.viewCount || 0} views
+                  </div>
                 </div>
                 <div className="mt-2 text-sm text-gray-700 line-clamp-3">
                   {/* Render a short excerpt from first paragraph block if available */}
-                  {Array.isArray(b.blocks) && b.blocks.length > 0 && b.blocks[0].content
-                    ? (function getText(blockContent: any){
+                  {Array.isArray(b.blocks) &&
+                  b.blocks.length > 0 &&
+                  b.blocks[0].content
+                    ? (function getText(blockContent: any) {
                         try {
                           // If blockContent is a TipTap JSON doc, extract text from first paragraph
-                          const doc = blockContent.type === 'doc' ? blockContent : (Array.isArray(blockContent) ? { type: 'doc', content: blockContent } : null);
+                          const doc =
+                            blockContent.type === "doc"
+                              ? blockContent
+                              : Array.isArray(blockContent)
+                              ? { type: "doc", content: blockContent }
+                              : null;
                           if (doc && doc.content && doc.content.length > 0) {
                             const node = doc.content[0];
-                            if (node.type === 'paragraph' && node.content) {
-                              return node.content.map((t: any) => t.text || '').join('');
+                            if (node.type === "paragraph" && node.content) {
+                              return node.content
+                                .map((t: any) => t.text || "")
+                                .join("");
                             }
-                            if (node.type === 'heading' && node.content) {
-                              return node.content.map((t: any) => t.text || '').join('');
+                            if (node.type === "heading" && node.content) {
+                              return node.content
+                                .map((t: any) => t.text || "")
+                                .join("");
                             }
                           }
                         } catch (e) {
-                          return '';
+                          return "";
                         }
-                        return '';
+                        return "";
                       })(b.blocks[0].content)
-                    : ''}
+                    : ""}
                 </div>
               </article>
             ))}
