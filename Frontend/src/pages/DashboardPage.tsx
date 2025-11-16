@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "../lib/supabase";
+
 import { type BlogPost } from "../types";
 import { BarChart3, Eye, MessageSquare, Calendar } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function DashboardPage() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ export default function DashboardPage() {
   const fetchBlogs = async () => {
     console.log("Fetching blogs with token:", token);
     try {
-      const response = await fetch("http://localhost:5000/api/blogs", {
+      const response = await fetch(`${BACKEND_URL}/api/blogs`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

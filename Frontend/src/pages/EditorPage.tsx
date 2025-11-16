@@ -7,7 +7,7 @@ import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Eye, Save, Smartphone, Monitor, ArrowLeft } from "lucide-react";
 import BlockRenderer from "../components/BlockRenderer";
 import { useAuth } from "../contexts/AuthContext";
-
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function EditorPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -69,12 +69,9 @@ export default function EditorPage() {
 
   const loadBlogForEditing = async (blogId: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/blogs/${blogId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/api/blogs/${blogId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const data = await response.json();
       if (data.status === "error") throw new Error(data.message);
@@ -95,7 +92,7 @@ export default function EditorPage() {
     try {
       setSaving(true);
 
-      const response = await fetch("http://localhost:5000/api/blogs", {
+      const response = await fetch(`${BACKEND_URL}/api/blogs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,22 +125,19 @@ export default function EditorPage() {
     try {
       if (editingId) {
         // Update existing
-        const response = await fetch(
-          `http://localhost:5000/api/blogs/${editingId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              title,
-              blocks,
-              status: "published",
-              publishedAt: new Date(),
-            }),
-          }
-        );
+        const response = await fetch(`${BACKEND_URL}/api/blogs/${editingId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title,
+            blocks,
+            status: "published",
+            publishedAt: new Date(),
+          }),
+        });
 
         const data = await response.json();
         if (!response.ok) throw new Error(data.message);
@@ -151,7 +145,7 @@ export default function EditorPage() {
         navigate(`/view/${editingId}`);
       } else {
         // Create new blog
-        const response = await fetch("http://localhost:5000/api/blogs", {
+        const response = await fetch(`${BACKEND_URL}/api/blogs`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

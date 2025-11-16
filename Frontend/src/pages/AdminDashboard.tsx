@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { BarChart, Users, ThumbsUp, MessageSquare, Loader } from "lucide-react";
-
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function AdminDashboard() {
   const { token } = useAuth();
   const [stats, setStats] = useState({
@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/blogs/stats", {
+        const response = await fetch(`${BACKEND_URL}/api/blogs/stats`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -25,14 +25,11 @@ export default function AdminDashboard() {
         const data = await response.json();
         setStats(data);
 
-        const blogsResponse = await fetch(
-          "http://localhost:5000/api/blogs/recent",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const blogsResponse = await fetch(`${BACKEND_URL}/api/blogs/recent`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const blogsData = await blogsResponse.json();
         setRecentBlogs(blogsData.data.blogs);
       } catch (error) {
@@ -58,7 +55,7 @@ export default function AdminDashboard() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+      const response = await fetch(`${BACKEND_URL}/api/blogs/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

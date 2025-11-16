@@ -12,7 +12,7 @@ import {
   Heart,
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function BlogViewPage() {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
@@ -33,7 +33,7 @@ export default function BlogViewPage() {
       if (!id) return;
 
       try {
-        const response = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/blogs/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default function BlogViewPage() {
           );
 
           // Increment view count in backend
-          await fetch(`http://localhost:5000/api/blogs/${id}/view`, {
+          await fetch(`${BACKEND_URL}/api/blogs/${id}/view`, {
             method: "POST",
             headers: {
               Authorization: token ? `Bearer ${token}` : "",
@@ -74,7 +74,7 @@ export default function BlogViewPage() {
       try {
         // Author Blogs
         const resAuthor = await fetch(
-          `http://localhost:5000/api/blogs?author=${authorId}&status=published`,
+          `${BACKEND_URL}/api/blogs?author=${authorId}&status=published`,
           {
             method: "GET",
             headers: {
@@ -92,7 +92,7 @@ export default function BlogViewPage() {
 
         // Trending Blogs (most viewed)
         const resTrending = await fetch(
-          "http://localhost:5000/api/blogs?status=published&sort=-viewCount&limit=6",
+          `${BACKEND_URL}/api/blogs?status=published&sort=-viewCount&limit=6`,
           {
             method: "GET",
             headers: {
@@ -110,7 +110,7 @@ export default function BlogViewPage() {
 
         // Other blogs (recent)
         const resOther = await fetch(
-          "http://localhost:5000/api/blogs?status=published&sort=-publishedAt&limit=12",
+          `${BACKEND_URL}/api/blogs?status=published&sort=-publishedAt&limit=12`,
           {
             method: "GET",
             headers: {
@@ -138,7 +138,7 @@ export default function BlogViewPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/blogs/${post.id}/comment`,
+        `${BACKEND_URL}/api/blogs/${post.id}/comment`,
         {
           method: "POST",
           headers: {
@@ -173,7 +173,7 @@ export default function BlogViewPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/blogs/${post?.id}/like`,
+        `${BACKEND_URL}/api/blogs/${post?.id}/like`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },

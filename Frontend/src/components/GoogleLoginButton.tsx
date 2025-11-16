@@ -1,8 +1,8 @@
 import React from "react";
-
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function GoogleLoginButton() {
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href = `${BACKEND_URL}/api/auth/google`;
   };
 
   return (

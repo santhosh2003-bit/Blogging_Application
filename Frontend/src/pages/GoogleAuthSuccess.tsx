@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.BACKEND_URL;
 export default function GoogleAuthSuccess() {
   const navigate = useNavigate();
 
@@ -11,7 +12,7 @@ export default function GoogleAuthSuccess() {
     if (token) {
       localStorage.setItem("token", token);
       axios
-        .get("http://localhost:5000/api/auth/user", {
+        .get(`${BACKEND_URL}/api/auth/user`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
