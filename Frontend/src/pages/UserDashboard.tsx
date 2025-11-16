@@ -4,7 +4,7 @@ import { supabase } from "../lib/supabase";
 import { type BlogPost } from "../types";
 import { BarChart3, Eye, MessageSquare, Calendar } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function UserDashboard() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);

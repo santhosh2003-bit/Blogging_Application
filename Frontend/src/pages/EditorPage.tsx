@@ -7,7 +7,7 @@ import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Eye, Save, Smartphone, Monitor, ArrowLeft } from "lucide-react";
 import BlockRenderer from "../components/BlockRenderer";
 import { useAuth } from "../contexts/AuthContext";
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function EditorPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

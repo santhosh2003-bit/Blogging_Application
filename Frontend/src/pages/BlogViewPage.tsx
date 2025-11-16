@@ -12,7 +12,7 @@ import {
   Heart,
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function BlogViewPage() {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);

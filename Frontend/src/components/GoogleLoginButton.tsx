@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function GoogleLoginButton() {
   const handleGoogleLogin = () => {
     window.location.href = `${BACKEND_URL}/api/auth/google`;

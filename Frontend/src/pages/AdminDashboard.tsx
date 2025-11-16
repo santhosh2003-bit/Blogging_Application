@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { BarChart, Users, ThumbsUp, MessageSquare, Loader } from "lucide-react";
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export default function AdminDashboard() {
   const { token } = useAuth();
   const [stats, setStats] = useState({

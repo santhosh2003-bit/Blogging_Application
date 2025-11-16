@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const BACKEND_URL = import.meta.env.BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 interface User {
   id: string;
   name: string;
@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setLoading(false); // 👈 mark done once check completes
   }, []);
+  console.log("AuthProvider render, loading:", BACKEND_URL);
   const login = async (email: string, password: string) => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
