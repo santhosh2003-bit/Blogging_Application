@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import GoogleAuthSuccess from "./pages/GoogleAuthSuccess";
@@ -6,11 +6,9 @@ import HomePage from "./pages/HomePage";
 import { useAuth } from "./contexts/AuthContext";
 import Navigation from "./components/Navigation";
 
-// Route groups
 import AdminRoutes from "./routes/AdminRoutes";
 import UserRoutes from "./routes/UserRoutes";
 
-// Protected Route Component
 const ProtectedRoute = ({
   children,
   requiredRole,
@@ -29,7 +27,6 @@ const ProtectedRoute = ({
   }
 
   if (!user || !token) {
-    console.log("No user/token found — redirecting to login");
     return <Navigate to="/login" replace />;
   }
 
@@ -42,11 +39,18 @@ const ProtectedRoute = ({
 
 function App() {
   const { user } = useAuth();
+  const location = useLocation();
+
+  // hide navbar on login and register pages
+  const hideNavbar =
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === "/google-auth-success";
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation is handled inside HomePage for the landing page, or globally for logged-in users */}
-      {user && <Navigation />}
+      {/* Show Navigation only if user exists AND the route is not login/register */}
+      {user && !hideNavbar && <Navigation />}
 
       <Routes>
         {/* Public Routes */}
@@ -58,7 +62,7 @@ function App() {
         {/* Admin routes grouped under /admin/* */}
         <Route path="/admin/*" element={<AdminRoutes />} />
 
-        {/* User routes (blogs) grouped) */}
+        {/* User routes */}
         <Route path="/*" element={<UserRoutes />} />
       </Routes>
     </div>
