@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { FileText, Edit, BarChart3, LogOut, User } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { FileText, Edit, BarChart3, LogOut, User } from "lucide-react";
 
 export default function Navigation() {
   const { user, logout } = useAuth();
@@ -11,16 +11,16 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link
-              to={user?.role === 'admin' ? '/admin' : '/blogs'}
+              to={user?.role === "admin" ? "/admin" : "/blogs"}
               className="flex items-center gap-2 text-xl font-bold text-gray-900"
             >
               <FileText className="w-6 h-6" />
               Blog Platform
             </Link>
           </div>
-          
+
           <div className="flex items-center gap-4">
-            {user?.role === 'admin' ? (
+            {user?.role === "admin" ? (
               <>
                 <Link
                   to="/admin"
@@ -34,7 +34,7 @@ export default function Navigation() {
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   <Edit className="w-4 h-4" />
-                  New Blog
+                  Blog
                 </Link>
               </>
             ) : (
@@ -46,12 +46,12 @@ export default function Navigation() {
                 Blogs
               </Link>
             )}
-            
+
             <div className="flex items-center gap-2 text-sm text-gray-700">
               <User className="w-4 h-4" />
               {user?.name}
             </div>
-            
+
             <button
               onClick={logout}
               className="flex items-center gap-2 px-3 py-2 text-red-600 hover:text-red-700 transition-colors"
